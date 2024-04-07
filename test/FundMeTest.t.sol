@@ -13,7 +13,6 @@ contract FundMeTest is Test {
     uint256 constant SEND_VALUE = 10e18;
     uint256 constant STARTING_BALANCE = 20 ether;
 
-
     modifier funded() {
         vm.prank(alice);
         fundMe.fund{value: SEND_VALUE}();
@@ -46,11 +45,7 @@ contract FundMeTest is Test {
         fundMe.fund();
     }
 
-  
-
-    function testDundUpdatesDoundedDataStructure() public funded{
-        
-
+    function testDundUpdatesDoundedDataStructure() public funded {
         uint256 amountFunded = fundMe.getAddressToAmountFounded(alice);
 
         assertEq(amountFunded, SEND_VALUE);
@@ -59,8 +54,7 @@ contract FundMeTest is Test {
     function testAddsFunderToArrayOfFunders() public funded {
         address funder = fundMe.getFunder(0);
 
-        assertEq (alice, funder);
-
+        assertEq(alice, funder);
     }
 
     function testOnlyOwnerCanWithdraw() public funded {
@@ -81,7 +75,6 @@ contract FundMeTest is Test {
 
         assertEq(finalFundMeBalance, 0);
         assertEq(initialOwnerBalance + initialFundMeBalance, finalOwnerBalance);
-
     }
 
     function testWithdrawWithMultipleOwners() public funded {
@@ -92,7 +85,7 @@ contract FundMeTest is Test {
             hoax(address(i), SEND_VALUE);
             fundMe.fund{value: SEND_VALUE}();
         }
-        
+
         uint256 initialOwnerBalance = fundMe.getOwner().balance;
         uint256 initialFundMeBalance = address(fundMe).balance;
 
@@ -105,8 +98,5 @@ contract FundMeTest is Test {
 
         assertEq(finalFundMeBalance, 0);
         assertEq(initialOwnerBalance + initialFundMeBalance, finalOwnerBalance);
-
     }
-
-
 }
