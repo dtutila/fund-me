@@ -47,13 +47,11 @@ contract FundMeTest is Test {
 
     function testDundUpdatesDoundedDataStructure() public funded {
         uint256 amountFunded = fundMe.getAddressToAmountFounded(alice);
-
         assertEq(amountFunded, SEND_VALUE);
     }
 
     function testAddsFunderToArrayOfFunders() public funded {
         address funder = fundMe.getFunder(0);
-
         assertEq(alice, funder);
     }
 
